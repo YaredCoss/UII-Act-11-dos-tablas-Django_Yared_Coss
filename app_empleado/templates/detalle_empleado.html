@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ empleado.nombre }}Detalles{% endblock %}
+
+{% block contenido %}
+<article class="artist-detail">
+    <div class="artist-banner">
+        {% if empleado.foto_empleado %}
+            <img src="{{ empleado.foto_empleado.url }}" alt="Foto de {{ empleado.nombre }}" class="detail-photo">
+        {% else %}
+            <div class="detail-placeholder">👤</div>
+        {% endif %}
+        <div class="artist-info">
+            <h1>{{ empleado.nombre }}</h1>
+            <h3>{{ empleado.apellido }}</h3>
+            <h3>{{ empleado.puesto }}</h3>
+            <h3>{{ empleado.salario }}</h3>
+            <h3>{{ empleado.telefono }}</h3>
+            <h3>{{ empleado.correo }}</h3>
+            <h3>{{ empleado.foto_empleado }}</h3>
+        </div>
+    </div>
+
+    <div class="detail-actions">
+        <a href="{% url 'app_empleado:editar_empleado' empleado.id %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'app_empleado:borrar_empleado' empleado.id %}" class="btn btn-danger">🗑️ Borrar</a>
+    </div>
+
+    <section class="songs-section">
+        <h2>Transportes</h2>
+        {% if empleado.transporte.all %}
+        <ul class="song-list">
+            {% for transporte in empleado.transporte.all %}
+            <li>{{ transporte.nombre }}</li>
+            <li>{{ transporte.descripcion }}</li>
+            <li>{{ transporte.tipo }}</li>
+            <li>{{ transporte.capacidad }}</li>
+            <li>{{ transporte.precio }}</li>
+            <li>{{ transporte.horario }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-message">Este empleado no tiene transportes registrados.</p>
+        {% endif %}
+    </section>
+</article>
+{% endblock %}

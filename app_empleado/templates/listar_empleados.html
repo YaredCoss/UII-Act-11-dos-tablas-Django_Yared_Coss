@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block titulo %}Empleados{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Empleados Registrados</h2>
+    <a href="{% url 'app_empleado:crear_empleado' %}" class="btn btn-primary">+ Agregar empleado</a>
+</div>
+
+<ul class="artist-grid">
+    {% for empleado in empleado %}
+    <li class="artist-card">
+        <a href="{% url 'app_empleado:detalle_empleado' empleado.id %}">
+            {% if empleado.foto_empleado %}
+                <img src="{{ empleado.foto_empleado.url }}" alt="Foto de {{ empleado.nombre }}" class="artist-img">
+            {% else %}
+                <div class="artist-placeholder">🎵</div>
+            {% endif %}
+            <h3>{{ empleado.nombre }}</h3>
+            <p class="artist-nationality">{{ empleado.apellido }}</p>
+            <p class="artist-nationality">{{ empleado.puesto }}</p>
+            <p class="artist-nationality">{{ empleado.salario }}</p>
+            <p class="artist-nationality">{{ empleado.telefono }}</p>
+            <p class="artist-nationality">{{ empleado.correo }}</p>
+        </a>
+    </li>
+    {% empty %}
+    <li class="no-artists">No hay empleados registrados.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
